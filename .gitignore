@@ -1,0 +1,50 @@
+# ===== Android / Gradle =====
+*.iml
+.gradle/
+/local.properties
+.cxx/
+build/
+/captures
+/app/build/
+/app/release/
+/app/debug/
+
+# ===== Android Studio / IntelliJ =====
+.idea/
+*.hprof
+.navigation/
+/*/out/
+/*/*/build/
+/*/*/production/
+
+# ===== 서명키 (절대 커밋 금지) =====
+# 잃어버리면 앱 업데이트가 영원히 불가능하니, 저장소가 아닌
+# 안전한 곳(비밀번호 관리자·외장 저장소)에 따로 백업하세요.
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# ===== 서비스 설정 (있다면) =====
+google-services.json
+/app/google-services.json
+
+# ===== 빌드 산출물 =====
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output.json
+/app/*/output-metadata.json
+
+# ===== OS / 편집기 =====
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+
+# ===== 로그 / 임시 =====
+*.log
+/tmp/

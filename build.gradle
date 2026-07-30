@@ -1,0 +1,4 @@
+// 최상위(프로젝트 전체) 빌드 설정
+plugins {
+    id 'com.android.application' version '8.2.2' apply false
+}
