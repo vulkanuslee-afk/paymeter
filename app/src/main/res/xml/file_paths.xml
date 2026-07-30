@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- 영수증 공유용 임시 파일 (앱 캐시) -->
+    <cache-path name="share" path="share/" />
+    <external-files-path name="pictures" path="Pictures/" />
+</paths>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app_name은 free/pro 각 flavor의 build.gradle resValue에서 지정됩니다 -->
+</resources>

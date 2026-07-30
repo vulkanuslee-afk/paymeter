@@ -1,0 +1,83 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.paymeter.app'
+    compileSdk 34
+
+    defaultConfig {
+        // applicationId는 아래 productFlavors에서 free/pro 각각 지정합니다
+        applicationId "com.paymeter.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    // ===== 무료판 / 유료판 빌드 변형 =====
+    // free  → com.paymeter.app  (상단 광고 레이아웃 표시)
+    // pro   → com.paymeter.pro  (광고 없음, 2,000원 판매용)
+    flavorDimensions = ["version"]
+    productFlavors {
+        free {
+            dimension "version"
+            applicationId "com.paymeter.app"
+            resValue "string", "app_name", "페이미터"
+        }
+        pro {
+            dimension "version"
+            applicationId "com.paymeter.pro"
+            resValue "string", "app_name", "페이미터 Pro"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // 실제 폰에서 바로 설치해 테스트할 때 사용 (서명 자동)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // index.html이 자산(assets)에 통째로 들어가므로 압축 없이 그대로 패키징
+    androidResources {
+        noCompress += ["html"]
+    }
+
+    packaging {
+        resources {
+            excludes += ['META-INF/*.kotlin_module', 'META-INF/DEPENDENCIES',
+                         'META-INF/LICENSE*', 'META-INF/NOTICE*']
+        }
+    }
+}
+
+// ===== Kotlin 표준 라이브러리 버전 통일 =====
+// AndroidX 라이브러리들이 서로 다른 Kotlin 버전을 끌어오면
+// "Duplicate class kotlin.*.jdk8..." 빌드 오류가 납니다.
+// Kotlin 1.8부터 jdk7/jdk8 아티팩트가 본체(kotlin-stdlib)로 합쳐졌기 때문입니다.
+// 모든 Kotlin 아티팩트를 같은 버전으로 강제해 중복을 없앱니다.
+configurations.configureEach {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jetbrains.kotlin') {
+            details.useVersion '1.9.24'
+            details.because 'Kotlin stdlib 중복 클래스 오류 방지'
+        }
+    }
+}
+
+dependencies {
+    // appcompat이 androidx.core(FileProvider 포함)를 함께 가져옵니다.
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+
+    // 나중에 AdMob을 붙이고 싶으면 아래 주석을 해제하세요 (README 참고)
+    // implementation 'com.google.android.gms:play-services-ads:23.0.0'
+}
